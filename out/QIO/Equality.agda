@@ -17,10 +17,10 @@ term
   applyDv  : P  P'.T  ->  T
 
 theory
-  (A) a:P   t u:T |> applyX (a, b.measure(b, t, u)) = measure(a, u, t)
-  (B) a:P   b:P  t u:P.T |> measure(a, applyDu(b, b.t[b]), applyDv(b, b.u[b])) = applyDuv(a, b, a b.measure(a, t[b], u[b]))
-  (D) t u:T |> new(a.measure(a, t, u)) = t
-  (E) b:P  t:(P1, P2).T |> new(a.applyDuv(a, b, a b. t[a,b])) = applyDu(b, b.new(a.t[a,b]))
+  (A) a:P   t u:T         |> applyX (a, b.measure(b, t, u)) = measure(a, u, t)
+  (B) a:P   b:P  t u:P.T  |> measure(a, applyDu(b, b.t[b]), applyDv(b, b.u[b])) = applyDuv(a, b, a b.measure(a, t[b], u[b]))
+  (D) t u:T               |> new(a.measure(a, t, u)) = t
+  (E) b:P  t:(P1, P2).T   |> new(a.applyDuv(a, b, a b. t[a,b])) = applyDu(b, b.new(a.t[a,b]))
 -}
 
 module QIO.Equality where

@@ -5,16 +5,19 @@ type
   P : 0-ary
 
 term
-  new       : P.T               ->  T
-  measure   : P     T1     T2   ->  T
-  applyX    : P     P'.T        ->  T
-  applyI2   : P     P'.T        ->  T
+  new       : P.T                     ->  T
+  measure   : P     T1     T2         ->  T
+  applyX    : P     P'.T              ->  T
+  applyI2   : P     P'.T              ->  T
   applyDuv  : P1    P2    (P1, P2).T  ->  T
-  applyDu   : P     P'.T        ->  T
-  applyDv   : P     P'.T        ->  T
+  applyDu   : P     P'.T              ->  T
+  applyDv   : P     P'.T              ->  T
 
 theory
-  (A) a:P   t u:T |> applyX (a, b.measure(b, t, u)) = measure(a, u, t)
-  (B) a:P   b:P  t u:P.T |> measure(a, applyDu(b, b.t[b]), applyDv(b, b.u[b])) = applyDuv(a, b, a b.measure(a, t[b], u[b]))
-  (D) t u:T |> new(a.measure(a, t, u)) = t
-  (E) b:P  t:(P1, P2).T |> new(a.applyDuv(a, b, a b. t[a,b])) = applyDu(b, b.new(a.t[a,b]))
+  (A) a:P   t u:T         |> applyX (a, b.measure(b, t, u))
+                             = measure(a, u, t)
+  (B) a:P   b:P  t u:P.T  |> measure(a, applyDu(b, b.t[b]), applyDv(b, b.u[b]))
+                             = applyDuv(a, b, a b.measure(a, t[b], u[b]))
+  (D) t u:T               |> new(a.measure(a, t, u)) = t
+  (E) b:P  t:(P1, P2).T   |> new(a.applyDuv(a, b, a b. t[a,b]))
+                             = applyDu(b, b.new(a.t[a,b]))
