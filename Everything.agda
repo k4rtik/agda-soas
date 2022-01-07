@@ -68,13 +68,13 @@ import SOAS.Families.Build
 -- Box modality
 import SOAS.Abstract.Box
 
--- □-coalgebra on families – renaming structure
+-- □-coalgebra on families - renaming structure
 import SOAS.Abstract.Coalgebra
 
 -- Internal hom of families
 import SOAS.Abstract.Hom
 
--- Closed monoid in families – substitution structure
+-- Closed monoid in families - substitution structure
 import SOAS.Abstract.Monoid
 
 -- Exponential strength

@@ -9,18 +9,18 @@ type
 
 term
   new      : P.T  ->  T
-  measure  : P  T1  T2  ->  T
-  applyX   : P  P'.T  ->  T
-  applyI2  : P  P'.T  ->  T
-  applyDuv : P1  P2  (P1,P2).T  ->  T
-  applyDu  : P  P'.T  ->  T
-  applyDv  : P  P'.T  ->  T
+  measure  : P  T  T  ->  T
+  applyX   : P  P.T  ->  T
+  applyI2  : P  P.T  ->  T
+  applyDuv : P  P  (P,P).T  ->  T
+  applyDu  : P  P.T  ->  T
+  applyDv  : P  P.T  ->  T
 
 theory
   (A) a:P   t u:T         |> applyX (a, b.measure(b, t, u)) = measure(a, u, t)
   (B) a:P   b:P  t u:P.T  |> measure(a, applyDu(b, b.t[b]), applyDv(b, b.u[b])) = applyDuv(a, b, a b.measure(a, t[b], u[b]))
   (D) t u:T               |> new(a.measure(a, t, u)) = t
-  (E) b:P  t:(P1, P2).T   |> new(a.applyDuv(a, b, a b. t[a,b])) = applyDu(b, b.new(a.t[a,b]))
+  (E) b:P  t:(P, P).T     |> new(a.applyDuv(a, b, a b. t[a,b])) = applyDu(b, b.new(a.t[a,b]))
 -}
 
 
@@ -40,7 +40,7 @@ open import QIO.Signature
 private
   variable
     Γ Δ Π : Ctx
-    P' P1 P2 T1 T2 : QIOT
+    α : QIOT
     𝔛 : Familyₛ
 
 -- Inductive term declaration
@@ -48,15 +48,15 @@ module QIO:Terms (𝔛 : Familyₛ) where
 
   data QIO : Familyₛ where
     var  : ℐ ⇾̣ QIO
-    mvar : 𝔛 P' Π → Sub QIO Π Γ → QIO P' Γ
+    mvar : 𝔛 α Π → Sub QIO Π Γ → QIO α Γ
 
     new      : QIO T (P ∙ Γ) → QIO T Γ
-    measure  : QIO P Γ → QIO T1 Γ → QIO T2 Γ → QIO T Γ
-    applyX   : QIO P Γ → QIO T (P' ∙ Γ) → QIO T Γ
-    applyI2  : QIO P Γ → QIO T (P' ∙ Γ) → QIO T Γ
-    applyDuv : QIO P1 Γ → QIO P2 Γ → QIO T (P1 ∙ P2 ∙ Γ) → QIO T Γ
-    applyDu  : QIO P Γ → QIO T (P' ∙ Γ) → QIO T Γ
-    applyDv  : QIO P Γ → QIO T (P' ∙ Γ) → QIO T Γ
+    measure  : QIO P Γ → QIO T Γ → QIO T Γ → QIO T Γ
+    applyX   : QIO P Γ → QIO T (P ∙ Γ) → QIO T Γ
+    applyI2  : QIO P Γ → QIO T (P ∙ Γ) → QIO T Γ
+    applyDuv : QIO P Γ → QIO P Γ → QIO T (P ∙ P ∙ Γ) → QIO T Γ
+    applyDu  : QIO P Γ → QIO T (P ∙ Γ) → QIO T Γ
+    applyDv  : QIO P Γ → QIO T (P ∙ Γ) → QIO T Γ
 
   
 
@@ -102,7 +102,7 @@ module QIO:Terms (𝔛 : Familyₛ) where
       ; ⟨𝑚𝑣𝑎𝑟⟩ = λ{ {𝔪 = 𝔪}{mε} → cong (𝑚𝑣𝑎𝑟 𝔪) (dext (𝕊-tab mε)) }  }
       where
       open ≡-Reasoning
-      ⟨𝑎𝑙𝑔⟩ : (t : ⅀ QIO P' Γ) → 𝕤𝕖𝕞 (QIOᵃ.𝑎𝑙𝑔 t) ≡ 𝑎𝑙𝑔 (⅀₁ 𝕤𝕖𝕞 t)
+      ⟨𝑎𝑙𝑔⟩ : (t : ⅀ QIO α Γ) → 𝕤𝕖𝕞 (QIOᵃ.𝑎𝑙𝑔 t) ≡ 𝑎𝑙𝑔 (⅀₁ 𝕤𝕖𝕞 t)
       ⟨𝑎𝑙𝑔⟩ (newₒ      ⋮ _) = refl
       ⟨𝑎𝑙𝑔⟩ (measureₒ  ⋮ _) = refl
       ⟨𝑎𝑙𝑔⟩ (applyXₒ   ⋮ _) = refl
@@ -119,8 +119,8 @@ module QIO:Terms (𝔛 : Familyₛ) where
 
       open MetaAlg⇒ gᵃ⇒
 
-      𝕤𝕖𝕞! : (t : QIO P' Γ) → 𝕤𝕖𝕞 t ≡ g t
-      𝕊-ix : (mε : Sub QIO Π Γ)(v : ℐ P' Π) → 𝕊 mε v ≡ g (index mε v)
+      𝕤𝕖𝕞! : (t : QIO α Γ) → 𝕤𝕖𝕞 t ≡ g t
+      𝕊-ix : (mε : Sub QIO Π Γ)(v : ℐ α Π) → 𝕊 mε v ≡ g (index mε v)
       𝕊-ix (x ◂ mε) new = 𝕤𝕖𝕞! x
       𝕊-ix (x ◂ mε) (old v) = 𝕊-ix mε v
       𝕤𝕖𝕞! (mvar 𝔪 mε) rewrite cong (𝑚𝑣𝑎𝑟 𝔪) (dext (𝕊-ix mε))
