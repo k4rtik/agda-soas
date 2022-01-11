@@ -40,5 +40,5 @@ f∘copair : (𝒳 {𝒴} : Familyₛ) (f : Θ ~[ 𝒳 ➔ 𝒴 ]↝ Ξ)(σ : Γ
           (v : ℐ α (Γ ∔ Δ))
          → f (copair 𝒳 σ ς v) ≡ copair 𝒴 (f ∘ σ) (f ∘ ς) v
 f∘copair {Γ = ∅} 𝒳 f σ ς v = refl
-f∘copair {Γ = α ∙ Γ} 𝒳 f σ ς new = refl
+f∘copair {Γ = α ∙ Γ} 𝒳 f σ ς new = refl
 f∘copair {Γ = α ∙ Γ} 𝒳 f σ ς (old v) = f∘copair 𝒳 f (σ ∘ old) ς v
