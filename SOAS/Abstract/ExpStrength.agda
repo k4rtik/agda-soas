@@ -42,7 +42,7 @@ _⊸_ : Family → Familyₛ → Familyₛ
 [ 𝒳 ⊸ 𝒴ᵇ ]ᵇ = record
   { r = λ l ρ {_}{Δ} x → r (l x) (Δ ∔∣ ρ)
   ; counit = λ{ {Γ = Γ}{t = l} → iext (dext λ {Δ} ρ →  trans (r≈₂ (Concatʳ.identity Γ {Δ})) counit) }
-  ; comult = λ{ {Γ = Γ}{Δ}{Θ}{ρ = ρ}{ϱ}{l} → iext (dext λ {Ξ} x → trans (r≈₂ (Functor.homomorphism (Ξ ∔F–))) comult) } }
+  ; comult = λ{ {Γ = Γ}{Δ}{Θ}{ρ = ρ}{ϱ}{l} → iext (dext λ {Ξ} x → trans (r≈₂ (Functor.homomorphism (Ξ ∔F-))) comult) } }
   where
   open Coalg 𝒴ᵇ
 

@@ -30,7 +30,7 @@ Sub₁ f • = •
 Sub₁ f (x ◂ σ) = f x ◂ Sub₁ f σ
 
 -- Conversion between inductive substitutions and context maps
-module _ {𝒳 : Familyₛ} where
+module _ {𝒳 : Familyₛ} where
   index : Sub 𝒳 Γ Δ → Γ ~[ 𝒳 ]↝ Δ
   index • ()
   index (t ◂ σ) new = t

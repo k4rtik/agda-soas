@@ -98,12 +98,12 @@ module ∔ = BinaryCoproducts (Cocartesian.coproducts 𝔽:Cocartesian)
 ∔:Bifunctor = 𝔽:Co.-+-
 
 -- Left context concatenation functor Γ ∔ (-) : 𝔽 ⟶ 𝔽, for any context Γ
-_∔F– : Ctx → Functor 𝔽 𝔽
-Γ ∔F– = Γ ∔.+-
+_∔F- : Ctx → Functor 𝔽 𝔽
+Γ ∔F- = Γ ∔.+-
 
 -- Right context concatenation functor (-) ∔ Δ : 𝔽 ⟶ 𝔽, for any context Δ
-–∔F_ : Ctx → Functor 𝔽 𝔽
-–∔F Δ  = ∔.-+ Δ
+-∔F_ : Ctx → Functor 𝔽 𝔽
+-∔F Δ  = ∔.-+ Δ
 
 -- Functorial mapping and injections
 _∣∔∣_ : {Γ₁ Γ₂ Δ₁ Δ₂ : Ctx}(ρ : Γ₁ ↝ Γ₂)(ϱ : Δ₁ ↝ Δ₂) → (Γ₁ ∔ Δ₁) ↝ (Γ₂ ∔ Δ₂)
@@ -124,7 +124,7 @@ inr Γ {Δ} v = ∔.i₂ {Γ}{Δ} v
 
 -- Left context concatenation represents weakening a variable in Γ by an
 -- arbitrary new context Θ to get a variable in context (Θ ∔ Γ).
-module Concatˡ Γ = Functor (Γ ∔F–)
+module Concatˡ Γ = Functor (Γ ∔F-)
     using () renaming ( F₁           to _∔ᵣ_
                       ; identity     to ∔identity
                       ; homomorphism to ∔homomorphism
@@ -133,7 +133,7 @@ open Concatˡ public
 
 -- Context extension represents weakening by a single type, and it's a special
 -- case of context concatenation with a singleton context.
-module Ext τ = Functor (⌊ τ ⌋ ∔F–)
+module Ext τ = Functor (⌊ τ ⌋ ∔F-)
     using () renaming ( F₁           to _∙ᵣ_
                       ; identity     to ∙identity
                       ; homomorphism to ∙homomorphism
@@ -152,4 +152,4 @@ open Ext public
 -- Making this a definitional equality simplifies things significantly
 
 -- Right context concatenation is possible but rarely needed.
-module Concatʳ Δ =  Functor (–∔F Δ )
+module Concatʳ Δ =  Functor (-∔F Δ )

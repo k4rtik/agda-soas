@@ -51,7 +51,7 @@ module Unsorted where
 
   private module CoalgebraStructure = Structure 𝔽amilies Coalg
 
-  -- Eilenberg–Moore category of a comonad
+  -- Eilenberg-Moore category of a comonad
   ℂoalgebras : Category 1ℓ 0ℓ 0ℓ
   ℂoalgebras = CoalgebraStructure.StructCat (record
     { IsHomomorphism = Coalg⇒
@@ -120,7 +120,7 @@ module Sorted where
 
   private module CoalgebraStructure = Structure 𝔽amiliesₛ Coalg
 
-  -- Eilenberg–Moore category of a comonad
+  -- Eilenberg-Moore category of a comonad
   ℂoalgebras : Category 1ℓ 0ℓ 0ℓ
   ℂoalgebras = CoalgebraStructure.StructCat (record
     { IsHomomorphism = Coalg⇒
